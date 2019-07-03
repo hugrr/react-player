@@ -54,6 +54,7 @@ export class Home extends React.Component {
 					itemselected: this.state.itemselected - 1
 			  })
 			: null;
+
 		this.mySong.current.load();
 		this.mySong.current.play();
 	}
