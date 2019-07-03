@@ -4,42 +4,35 @@ export class Board extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			song: [
-				{
-					id: 1,
-					category: "pop",
-					name: "michael jackson",
-					url: "data/mario/fx_gameover.wav"
-				},
-				{
-					id: 2,
-					category: "trap",
-					name: "Paloma mami",
-					url: "data/mario/fx_jump_super.wav"
-				},
-				{
-					id: 3,
-					category: "rock",
-					name: "Nirvana",
-					url: "data/mario/fx_jump_super.wav"
-				},
-				{
-					id: 4,
-					category: "rap",
-					name: "Tupac",
-					url: "data/mario/fx_jump_super.wav"
-				},
-				{
-					id: 5,
-					category: "rap",
-					name: "snoopdog",
-					url: "data/mario/fx_jump_super.wav"
-				}
-			]
+			song: []
 		};
+	}
+	componentDidMount() {
+		fetch("https://assets.breatheco.de/apis/sound/songs")
+			.then(resp => {
+				return resp.json();
+			})
+			.then(data => {
+				console.log(data);
+
+				this.setState({ song: data });
+			});
+		console.log("didmount");
 	}
 
 	render() {
+		console.log("render");
+		let peo = this.state.song.map((item, index) => {
+			console.log(item.url);
+			return (
+				<tr key={index}>
+					<td>{item.id}</td>
+					<td>{item.name}</td>
+					<td>{item.category}</td>
+				</tr>
+			);
+		});
+
 		return (
 			<div>
 				<div className="container">
@@ -51,33 +44,7 @@ export class Board extends React.Component {
 								<th scope="col-6">category</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>{this.state.song[0].id}</td>
-								<td>{this.state.song[0].name}</td>
-								<td>{this.state.song[0].category}</td>
-							</tr>
-							<tr>
-								<td>{this.state.song[1].id}</td>
-								<td>{this.state.song[1].name}</td>
-								<td>{this.state.song[1].category}</td>
-							</tr>
-							<tr>
-								<td>{this.state.song[2].id}</td>
-								<td>{this.state.song[2].name}</td>
-								<td>{this.state.song[2].category}</td>
-							</tr>
-							<tr>
-								<td>{this.state.song[3].id}</td>
-								<td>{this.state.song[3].name}</td>
-								<td>{this.state.song[3].category}</td>
-							</tr>
-							<tr>
-								<td>{this.state.song[4].id}</td>
-								<td>{this.state.song[4].name}</td>
-								<td>{this.state.song[4].category}</td>
-							</tr>
-						</tbody>
+						<tbody>{peo}</tbody>
 					</table>
 				</div>
 			</div>
