@@ -40,18 +40,20 @@ export class Home extends React.Component {
 		this.setState({ reproducioendo: !this.state.reproducioendo });
 	}
 	next() {
-		this.setState({
-			itemselected: this.state.itemselected + 1
-		});
-
+		this.state.itemselected < 21
+			? this.setState({
+					itemselected: this.state.itemselected + 1
+			  })
+			: null;
 		this.mySong.current.load();
 		this.mySong.current.play();
 	}
 	back() {
-		this.setState({
-			itemselected: this.state.itemselected - 1
-		});
-
+		this.state.itemselected > 1
+			? this.setState({
+					itemselected: this.state.itemselected - 1
+			  })
+			: null;
 		this.mySong.current.load();
 		this.mySong.current.play();
 	}
