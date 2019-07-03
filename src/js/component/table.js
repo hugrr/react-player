@@ -1,31 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export class Board extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			song: []
-		};
+		this.state = {};
 	}
-	componentDidMount() {
-		fetch("https://assets.breatheco.de/apis/sound/songs")
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data);
-
-				this.setState({ song: data });
-			});
-		console.log("didmount");
-	}
-
 	render() {
 		console.log("render");
-		let peo = this.state.song.map((item, index) => {
+		let peo = this.props.songs.map((item, index) => {
 			console.log(item.url);
 			return (
-				<tr key={index}>
+				<tr
+					key={index}
+					className={this.props.selected == index ? "selected" : ""}>
 					<td>{item.id}</td>
 					<td>{item.name}</td>
 					<td>{item.category}</td>
@@ -36,18 +24,24 @@ export class Board extends React.Component {
 		return (
 			<div>
 				<div className="container">
-					<table className="table table-dark">
-						<thead>
-							<tr>
-								<th scope="col-2">cod</th>
-								<th scope="col-4">name</th>
-								<th scope="col-6">category</th>
-							</tr>
-						</thead>
-						<tbody>{peo}</tbody>
-					</table>
+					<div className="containertabla">
+						<table className="table table-dark">
+							<thead>
+								<tr>
+									<th scope="col-2">cod</th>
+									<th scope="col-4">name</th>
+									<th scope="col-6">category</th>
+								</tr>
+							</thead>
+							<tbody>{peo}</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
+Board.propTypes = {
+	songs: PropTypes.array,
+	selected: PropTypes.number
+};
